@@ -1,0 +1,16 @@
+<odoo>
+    <!-- Hospital Management Root Menü -->
+    <menuitem id="menu_hospital_root" name="Hospital Management" sequence="1" web_icon="/hospital_management/static/description/hospital.png"/>
+
+    <!-- Ana Sayfa Menü Öğesi -->
+    <menuitem id="menu_hospital_homepage" name="Ana Sayfa" parent="menu_hospital_root" sequence="0" action="action_hospital_homepage"/>
+
+    <!-- Diğer Menü Öğeleri -->
+    <menuitem id="menu_hospital_appointments" name="Randevular" parent="menu_hospital_root" sequence="2" action="action_appointments"/>
+    <menuitem id="menu_hospital_doctors" name="Doktorlar" parent="menu_hospital_root" sequence="3" action="action_doctors"/>
+    <menuitem id="menu_hospital_patients" name="Hastalar" parent="menu_hospital_root" sequence="4" action="action_patients"/>
+    <menuitem id="menu_hospital_health_history" name="Sağlık Geçmişi" parent="menu_hospital_root" sequence="5" action="action_health_history"/>
+    <menuitem id="menu_hospital_lab_tests" name="Test Sonuçları" parent="menu_hospital_root" sequence="6" action="action_lab_tests"/>
+    <menuitem id="menu_hospital_payments" name="Ödemeler" parent="menu_hospital_root" sequence="7" action="action_payments"/>
+    <menuitem id="menu_hospital_invoices" name="Faturalar" parent="menu_hospital_root" sequence="8" action="action_invoices"/>
+</odoo>

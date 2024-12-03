@@ -1,0 +1,297 @@
+<odoo>
+  <!-- Template for displaying vehicle rental list -->
+  <template id="template_vehicle_rental_list" name="Vehicle Rental List">
+    <t t-call="website.layout">
+      <div class="oe_structure" />
+      
+      <div class="oe_structure container mt16 mb16">
+        <div class="oe_structure container mt16 mb16">
+          <div class="oe_structure container mt16 mb16">
+            <!-- Main content: filters and room listings -->
+            <div class="row mt-4">
+              <!-- Filter section -->
+              <div
+                class="col-md-3"
+                style="
+                  background-color: white;
+                  border-radius: 10px;
+                  padding: 15px;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  height: fit-content;
+                  min-height: 250px;
+                "
+              >
+                <h3>Filter Vehicles</h3>
+
+                <form action="/rental" method="get">
+                  <!-- Vehicle Model -->
+                  <div class="form-group mb-3">
+                      <label>Vehicle Model:</label>
+                      <select 
+                        name="model_id"
+                        id="model_id"
+                        class="form-control link-style"
+                        >
+                          <option value=""
+                            t-att-selected="not model_id"
+                          >
+                            Select Vehicle Model
+                          </option>
+                          <t 
+                            t-foreach="vehicle_models"
+                            t-as="vehicle_model"
+                          >
+                              <option 
+                                t-esc="vehicle_model.name"
+                                t-att-value="vehicle_model.id"
+                                t-att-selected="int(model_id or 0) == vehicle_model.id"
+                              />
+                          </t>
+                      </select>
+                  </div>
+
+                  <!-- Search button -->
+                  <button type="submit" class="btn btn-primary">
+                    Search
+                  </button>
+                </form>
+              </div>
+
+              <!-- vehicles listings -->
+              <div class="col-md-9">
+                <div class="row">
+                  <t t-foreach="vehicles" t-as="vehicle">
+                    <div class="col-md-12 mb-4">
+                      <div
+                        class="card"
+                        style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px"
+                      >
+                        <div class="row no-gutters">
+                          <div class="col-md-4">
+                            <t t-if="vehicle.image_128">
+                              <img
+                                  t-att-src="website.image_url(vehicle, 'image_128')"
+                                  class="img-fluid"
+                                  alt="Room Image"
+                                  style="height: 100%; object-fit: cover"
+                              />
+                            </t>
+                          </div>
+                          <div class="col-md-8">
+                            <div class="card-body">
+                              <h2
+                                class="card-title"
+                                style="font-size: 1.75rem; font-weight: bold"
+                              >
+                                <t t-esc="vehicle.name" />
+                              </h2>
+                              <p class="card-text">
+                                <strong>Vehicle Model:</strong>
+                                <t t-esc="vehicle.model_id.name" />
+                              </p>
+                              <p class="card-text">
+                                <strong>ID:</strong>
+                                <t t-esc="vehicle.model_id.id" />
+                              </p>
+
+                              <a t-attf-href="/vehicle/rental/#{vehicle.id}">
+                                <button class="btn btn-primary">
+                                  Book vehicle
+                                </button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </t>
+
+                  <t t-if="not vehicles">
+                    <div class="col-md-12">
+                      <div class="alert alert-danger">
+                        <strong>No vehicles found!</strong> There are no vehicles available for rental.
+                      </div>
+                    </div>
+                  </t>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="oe_structure" />
+    </t>
+  </template>
+
+  <!-- Template for displaying vehicle rental form -->
+  <template id="template_vehicle_rental_form" name="Vehicle Rental Form">
+    <t t-call="website.layout">
+      <div class="oe_structure" />
+      
+      <div class="oe_structure container mt16 mb16">
+        <!-- Main content: filters and room listings -->
+        <div class="row mt-4">
+          <!-- vehicles listings -->
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12 mb-4">
+                <div
+                  class="card"
+                  style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 15px"
+                >
+                  <t t-if="vehicle">
+                    <div class="row no-gutters">
+                      <div class="col-md-4">
+                        <t t-if="vehicle.image_128">
+                          <img
+                              t-att-src="request.website.image_url(vehicle, 'image_128')"
+                              class="img-fluid"
+                              alt="Room Image"
+                              style="height: 100%; object-fit: cover"
+                          />
+                        </t>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h2
+                            class="card-title"
+                            style="font-size: 1.75rem; font-weight: bold"
+                          >
+                            <t t-esc="vehicle.name" />
+                          </h2>
+                          <p class="card-text">
+                            <strong>Vehicle Model:</strong>
+                            <t t-esc="vehicle.model_id.name" />
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <form action="/vehicle/rental/submit?customer_name=maher" method="post" class="mt-4">
+                      <div class="form-group">
+                        <div class="form-row">
+                          <div class="col">
+                            <label for="customer_name">Name:</label>
+                            <input
+                              required="true"
+                              type="text"
+                              id="customer_name"
+                              name="customer_name"
+                              class="form-control link-style"
+                            />
+                          </div>
+
+                          <div class="col">
+                            <label for="customer_email">Email:</label>
+                            <input
+                              required="true"
+                              type="email"
+                              id="customer_email"
+                              name="customer_email"
+                              class="form-control link-style"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <div class="col">
+                            <label for="customer_phone">Phone:</label>
+                            <input
+                              required="true"
+                              type="tel"
+                              id="customer_phone"
+                              name="customer_phone"
+                              class="form-control link-style"
+                            />
+                          </div>
+
+                          <div class="col">
+                            <label for="rent_start_date">Start Date:</label>
+                            <input
+                              required="true"
+                              type="date"
+                              id="rent_start_date"
+                              name="rent_start_date"
+                              class="form-control link-style"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-row">
+                          <label for="rent_end_date">End Date:</label>
+                          <input
+                            required="true"
+                            type="date"
+                            id="rent_end_date"
+                            name="rent_end_date"
+                            class="form-control link-style"
+                          />
+
+                          <input
+                            type="hidden"
+                            id="vehicle_id"
+                            name="vehicle_id"
+                            t-att-value="vehicle.id"
+                          />
+
+                          <input
+                            type="hidden"
+                            name="csrf_token"
+                            t-att-value="request.csrf_token()"
+                          />
+                        </div>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mt-3">
+                        Book Vehicle
+                      </button>
+                    </form>
+                  </t>
+
+                  <t t-if="not vehicle">
+                    <div class="alert alert-danger">
+                      <strong>Vehicle not found!</strong> The vehicle you are looking for does not exist.
+                    </div>
+                  </t>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="oe_structure" />
+    </t>
+  </template>
+
+  <!-- Template for booking confirmation -->
+  <template id="vehicle_booking_confirmation" name="Vehicle Booking Confirmation">
+      <t t-call="website.layout">
+          <div class="oe_structure" />
+          <div class="oe_structure container mt16 mb16" style="padding: 20px;">
+              <div class="confirmation-card" style="background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+              <div class="confirmation-icon" style="margin: 20px 0;">
+                      <img src="/fleet_rental/static/description/check.jpg" alt="Confirmation Icon" style="width: 100px;" />
+                  </div>
+                  <h1 class="confirmation-title" style="font-size: 2em; color: #4caf50;">Booking Confirmed!</h1>
+                  <p class="confirmation-message" style="font-size: 1.2em; color: #555;">Thank you for your booking. We will contact you soon.</p>
+                  <div class="contact-info" style="margin-top: 20px; font-size: 1em;">
+                      <h3>Need Assistance?</h3>
+                      <p>Contact us at <a href="mailto:support@example.com">support@example.com</a> or call us at <strong>(123) 456-7890</strong>.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="oe_structure" />
+      </t>
+  </template>
+
+
+  <!-- Menu item for vehicle display -->
+  <record id="vehicles_menu" model="website.menu">
+    <field name="name">Rent a Vehicle</field>
+    <field name="url">/rental</field>
+    <field name="parent_id" ref="website.main_menu" />
+  </record>
+</odoo>

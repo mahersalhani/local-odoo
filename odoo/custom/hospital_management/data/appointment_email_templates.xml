@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <!-- Randevu Onay Şablonu -->
+        <record id="email_template_appointment_confirmation" model="mail.template">
+            <field name="name">Randevu Onayı</field>
+            <field name="model_id" ref="hospital_management.model_hospital_appointment"/>
+            <field name="subject">Randevu Onayı - ${object.name}</field>
+            <field name="email_from">${(object.doctor_id.email or 'info@hospital.com')}</field>
+            <field name="email_to">${(object.patient_id.email or 'info@hospital.com')}</field>
+            <field name="body_html">
+                <![CDATA[
+                <p>Sayın ${object.patient_id.name},</p>
+                <p>Randevunuz başarıyla planlandı. Detaylar:</p>
+                <ul>
+                    <li>Randevu Referansı: ${object.name}</li>
+                    <li>Doktor: ${object.doctor_id.name}</li>
+                    <li>Tarih: ${object.appointment_date}</li>
+                </ul>
+                <p>Teşekkürler,</p>
+                <p>Hastane Yönetimi</p>
+                ]]>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

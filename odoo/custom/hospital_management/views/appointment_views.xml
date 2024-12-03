@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="view_appointment_form" model="ir.ui.view">
+            <field name="name">hospital.appointment.form</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <form string="Randevu">
+                    <sheet>
+                        <group>
+                            <field name="name"/>  <!-- Randevu Referansı -->
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="doctor_email"/>  <!-- İlgili Doktor E-postası -->
+                            <field name="appointment_date"/>
+                            <field name="notes"/>
+                            <field name="status"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_appointment_tree" model="ir.ui.view">
+            <field name="name">hospital.appointment.tree</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <tree string="Randevular">
+                    <field name="name"/>
+                    <field name="patient_id"/>
+                    <field name="doctor_id"/>
+                    <field name="appointment_date"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record id="view_patient_form" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form string="Hasta">
+                    <sheet>
+                        <group>
+                            <field name="name"/>  <!-- Hasta Adı -->
+                            <field name="date_of_birth"/>
+                            <field name="contact_number"/>
+                            <field name="email"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_patient_tree" model="ir.ui.view">
+            <field name="name">hospital.patient.tree</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <tree string="Hastalar">
+                    <field name="name"/>
+                    <field name="date_of_birth"/>
+                    <field name="contact_number"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

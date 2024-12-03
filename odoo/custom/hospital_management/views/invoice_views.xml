@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <!-- Form View for Invoices -->
+        <record id="view_invoice_form" model="ir.ui.view">
+            <field name="name">hospital.invoice.form</field>
+            <field name="model">hospital.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Fatura">
+                    <sheet>
+                        <group>
+                            <field name="patient_id"/> <!-- Hasta -->
+                            <field name="appointment_id"/> <!-- Randevu -->
+                            <field name="total_amount"/> <!-- Toplam Tutar -->
+                            <field name="invoice_date"/> <!-- Fatura Tarihi -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Invoices -->
+        <record id="view_invoice_tree" model="ir.ui.view">
+            <field name="name">hospital.invoice.tree</field>
+            <field name="model">hospital.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Faturalar">
+                    <field name="patient_id"/>
+                    <field name="total_amount"/>
+                    <field name="invoice_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Invoices -->
+        <record id="action_invoices" model="ir.actions.act_window">
+            <field name="name">Faturalar</field>
+            <field name="res_model">hospital.invoice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu for Invoices -->
+        <menuitem id="menu_hospital_invoices" name="Faturalar" parent="menu_hospital_root" sequence="8" action="action_invoices"/>
+    </data>
+</odoo>

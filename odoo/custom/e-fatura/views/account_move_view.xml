@@ -1,0 +1,86 @@
+<odoo>
+    <data>
+        <!-- Yeni form görünümü -->
+        <record id="view_move_form_efatura" model="ir.ui.view">
+            <field name="name">account.move.form.efatura</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="action_post_efatura" string="Post with E-Fatura" type="object" class="btn-primary" invisible="id or state != 'draft'" />
+                </header>
+
+                <xpath expr="//sheet" position="inside">
+                    <notebook>
+                        <page string="Müşteri Bilgileri" name="customer_info">
+                            <group>
+                                <field name="name_surname" string="Müşteri Adı Soyadı" required="1"/>
+                                <field name="customer_tckn_vkn" string="Müşteri TCKN/VKN" required="1"/>
+                                <field name="customer_country_id" string="Ülke" required="1"/>
+                                <field name="customer_city" string="Şehir" required="1"/>
+                                <field name="customer_room" string="Oda No" required="1"/>
+                                <field name="customer_district" string="İlçe" required="1"/>
+                                <field name="customer_town" string="Mahalle" required="1"/>
+                                <field name="customer_postal_code" string="Posta Kodu" required="1"/>
+                                <field name="customer_building_no" string="Bina No" required="1"/>
+                                <field name="customer_street" string="Cadde" required="1"/>
+                                <field name="phone" string="Telefon" required="1"/>
+                                <field name="customer_tax_adress" string="Vergi Dairesi Adı"/>
+                            </group>
+                        </page>
+
+                        <page string="Tedarikçi Bilgileri" name="supplier_info">
+                            <group>
+                                <field name="supplier_name" string="Tedarikçi Adı" required="1"/>
+                                <field name="supplier_lastname" string="Tedarikçi Soyadı" required="1"/>
+                                <field name="taxed_number" string="Vergi Numarası" required="1"/>
+                                <field name="mersis_number" string="Mersis Numarası" required="1"/>
+                                <field name="account_number" string="Hesap Numarası" required="1"/>
+                                <field name="target_title" string="Hedef Unvan" required="1"/>
+                                <field name="room" string="Oda No" required="1"/>
+                                <field name="street" string="Cadde" required="1"/>
+                                <field name="building_no" string="Bina No" required="1"/>
+                                <field name="district" string="İlçe" required="1"/>
+                                <field name="city" string="Şehir" required="1"/>
+                            </group>
+                        </page>
+
+                        <page string="E-Fatura Bilgileri" name="efatura_info">
+                            <group>
+                                <field name="external_invoice_id" string="Dış Fatura ID" required="1"/>
+                                <field name="issue_date" string="Fatura Tarihi" required="1"/>
+                                <field name="invoice_type" string="Fatura Türü" required="1"/>
+                                <field name="document_currency_code" string="Para Birimi" required="1"/>
+                                <field name="tax_total" string="Toplam Vergi" required="1"/>
+                                <field name="amount_untaxed_signed" string="Vergisiz Tutar" required="1"/>
+                                <field name="amount_total_signed" string="Toplam Tutar" required="1"/>
+                            </group>
+                        </page>
+
+                        <page string="Ürün Bilgileri" name="product_info">
+                            <field name="product_line_ids" widget="one2many_list">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+                    <!-- E-Fatura Gönder Butonu -->
+                    <xpath expr="//div[@class='o_statusbar_buttons d-flex align-items-center align-content-around flex-wrap gap-1']" position="inside">
+                        <button name="action_post_efatura" string="E-Fatura Gönder" type="object" class="btn btn-success" data-hotkey="q" invisible="hide_post_button or move_type != 'entry'">
+                            <span class="fa fa-paper-plane"></span> E-Fatura Gönder
+                        </button>
+                    </xpath>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

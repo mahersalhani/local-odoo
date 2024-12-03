@@ -1,0 +1,334 @@
+<odoo>
+    <!-- Template for displaying hotel rooms -->
+    <template id="template_hotel_rooms_1" name="Hotel Rooms">
+        <t t-call="website.layout">
+        <div class="oe_structure" />
+        <div class="oe_structure container mt16 mb16">
+            <!-- Date search form -->
+            <form method="get" action="/hotel/rooms" class="mb-4">
+                <div
+                    class="row justify-content-between"
+                    style="
+                    background-color: none;
+                    border-radius: 10px;
+                    padding: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    "
+                >
+                    <div class="col-md-5 mb-2">
+                    <label for="check_in">Check-in Date:</label>
+                    <input
+                        type="date"
+                        id="check_in"
+                        name="check_in"
+                        t-att-value="check_in"
+                        class="form-control"
+                    />
+                    </div>
+                    <div class="col-md-5 mb-2">
+                    <label for="check_out">Check-out Date:</label>
+                    <input
+                        type="date"
+                        id="check_out"
+                        name="check_out"
+                        t-att-value="check_out"
+                        class="form-control"
+                    />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end mb-2">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        style="border-radius: 50%; padding: 10px 15px"
+                    >
+                        <i class="fa fa-search"></i>
+                    </button>
+                    </div>
+                </div>
+
+                <!-- If there is no check-in check-out add note -->
+                <t t-if="not check_in or not check_out">
+                    <div class="alert alert-warning mt-4">
+                        Please select check-in and check-out dates to view available rooms.
+                    </div>
+                </t>
+
+                <!-- Error handling -->
+                <t t-if="error">
+                    <div class="alert alert-danger mt-4">
+                        <t t-esc="error" />
+                    </div>
+                </t>
+            </form>
+
+            <!-- Main content: filters and room listings -->
+            <div class="row mt-4">
+            <!-- Filter section -->
+            <div
+                class="col-md-3"
+                style="
+                background-color: white;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                height: fit-content;
+                min-height: 250px;
+                "
+            >
+                <h3>Filter Rooms</h3>
+
+
+                <form action="/hotel/rooms" method="get">
+                    <!-- Vehicle Model -->
+                    <div class="form-group mb-3">
+                        <label for="room_type">Room type:</label>
+                        <select 
+                            name="room_type"
+                            id="room_type"
+                            class="form-control link-style"
+                            >
+                            <option value=""
+                                t-att-selected="not room_type"
+                            >
+                                Select Room Type
+                            </option>
+                            <t 
+                                t-foreach="room_types"
+                                t-as="room_type_data"
+                            >
+                                <option 
+                                    t-esc="room_type_data.name"
+                                    t-att-value="room_type_data.id"
+                                    t-att-selected="int(room_type or 0) == room_type_data.id"
+                                />
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- checkin -->
+                        <input
+                            id="check_in"
+                            name="check_in"
+                            t-att-value="check_in"
+                            type="hidden"
+                        />
+
+                    <!-- checkout -->
+                        <input
+                            id="check_out"
+                            name="check_out"
+                            t-att-value="check_out"
+                            type="hidden"
+                        />
+
+                    <!-- Search button -->
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+                </form>
+
+                <!-- Room view filter -->
+                <!-- <div class="mb-3">
+                    <label for="room_view">Room View:</label>
+                    <select id="room_view" name="room_view" class="form-control">
+                        <option value="">Select Room View</option>
+                        <option value="sea">Sea View</option>
+                        <option value="city">City View</option>
+                        <option value="garden">Garden View</option>
+                    </select>
+                </div> -->
+
+                <!-- Capacity filter -->
+                <!-- <div class="mb-3">
+                    <label for="capacity">Capacity:</label>
+                    <select id="capacity" name="capacity" class="form-control">
+                        <option value="">Select Capacity</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4+">4+ Persons</option>
+                    </select>
+                </div> -->
+            </div>
+
+            <!-- Room listings -->
+            <div class="col-md-9">
+                <div class="row">
+                <t t-foreach="rooms" t-as="room">
+                    <div class="col-md-12 mb-4">
+                    <div
+                        class="card"
+                        style="
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        padding: 15px;
+                        "
+                    >
+                        <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <t t-if="room.room_image">
+                            <img
+                                t-att-src="website.image_url(room, 'room_image')"
+                                class="img-fluid"
+                                alt="Room Image"
+                                style="height: 100%; object-fit: cover"
+                            />
+                            </t>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                            <h2
+                                class="card-title"
+                                style="font-size: 1.75rem; font-weight: bold"
+                            >
+                                <a t-attf-href="/hotel/room/#{room.id}">
+                                <t t-esc="room.name" />
+                                </a>
+                            </h2>
+                            <p class="card-text">
+                                <strong>Room Type:</strong>
+                                <t t-esc="room.room_type.display_name" />
+                            </p>
+
+                            <!-- Book Room button, shown only when check-in and check-out dates are selected -->
+                            <t t-if="check_in and check_out">
+                                <form method="post" action="/hotel/booking/submit">
+                                    <!-- Manually include CSRF token -->
+                                    <input
+                                        type="hidden"
+                                        name="csrf_token"
+                                        t-att-value="request.csrf_token()"
+                                    />
+                                    <input type="hidden" name="room_id" t-att-value="room.id"/>
+                                    <input type="hidden" name="check_in" t-att-value="check_in"/>
+                                    <input type="hidden" name="check_out" t-att-value="check_out"/>
+                                    <button type="submit" class="btn btn-success">
+                                        Book Room
+                                    </button>
+                                </form>
+                            </t>
+
+                            <!-- <p class="card-text">
+                                <strong>Status:</strong> <t t-esc="room.state" />
+                            </p>
+                            <p class="card-text">
+                                <strong>Bookings:</strong>
+                                <t t-esc="room.booking_count" />
+                            </p> -->
+
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </t>
+                </div>
+            </div>
+            </div>
+
+            <!-- <div class="products_pager">
+                <t t-call="website.pager" />
+            </div> -->
+            <div class="products_pager form-inline justify-content-center mt-3">
+                <t t-call="website.pager">
+                    <t t-set="_classes">mt-2 ml-md-2</t>
+                </t>
+            </div>
+
+        </div>
+        <div class="oe_structure" />
+        </t>
+    </template>
+
+    <template id="template_hotel_room_detail" name="Hotel Room Details">
+        <t t-call="website.layout">
+        <div class="container">
+            <h1><t t-esc="room.name" /></h1>
+            <t t-if="room.room_image">
+            <img
+                t-att-src="website.image_url(room, 'room_image')"
+                class="img-fluid"
+                alt="Room Image"
+            />
+            </t>
+            <p>Room Type: <t t-esc="room.room_type.display_name" /></p>
+            <p>Status: <t t-esc="room.state" /></p>
+            <!-- <p>Current Guest: <t t-esc="room.current_guest_name or 'No guest'"/></p> -->
+            <p>Booking Count: <t t-esc="room.booking_count" /></p>
+            <a t-attf-href="/hotel/bookings/#{room.id}" class="btn btn-primary"
+            >View Bookings</a
+            >
+        </div>
+        </t>
+    </template>
+
+    <template id="hotel_booking_form" name="Hotel Booking Form">
+        <t t-call="website.layout">
+        <div class="oe_structure" />
+        <div class="oe_structure">
+            <div class="container mt16 mb16">
+            <h1>Book a Hotel Room</h1>
+
+            <form action="/hotel/booking/submit" method="post">
+                <!-- Manually include CSRF token -->
+                <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+                />
+                <div class="col-md-6">
+                <div class="form-group">
+                    <label for="check_in">Check-In Date</label>
+                    <input
+                    type="date"
+                    name="check_in"
+                    id="check_in"
+                    class="form-control"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="check_out">Check-Out Date</label>
+                    <input
+                    type="date"
+                    name="check_out"
+                    id="check_out"
+                    class="form-control"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="room_id">Room</label>
+                    <select name="room_id" id="room_id" class="form-control">
+                    <t t-foreach="rooms" t-as="room">
+                        <option t-att-value="room.id">
+                        <t t-esc="room.name" />
+                        </option>
+                    </t>
+                    </select>
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Book Now</button>
+            </form>
+            </div>
+        </div>
+        <div class="oe_structure" />
+        </t>
+    </template>
+
+    <!-- Template for booking confirmation -->
+    <template id="hotel_booking_confirmation" name="Hotel Booking Confirmation">
+        <t t-call="website.layout">
+        <div class="container mt16 mb16">
+            <h1>Booking Confirmed!</h1>
+            <p>Thank you for your booking. We will contact you soon.</p>
+        </div>
+        </t>
+    </template>
+
+    <!-- Menu item for room display -->
+    <record id="hotel_rooms_menu" model="website.menu">
+        <field name="name">Hotel Rooms</field>
+        <field name="url">/hotel/rooms</field>
+        <field name="parent_id" ref="website.main_menu" />
+    </record>
+
+</odoo>
+

@@ -1,0 +1,83 @@
+<odoo>
+    <record id="action_hotel_vehicle" model="ir.actions.act_window">
+        <field name="name">Vehicle</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">vehicle.vehicle</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="view_hotel_vehicle_form" model="ir.ui.view">
+        <field name="name">hotel.vehicle.form</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="vehicle_image" widget="image"
+                        class="oe_avatar"
+                        options="{'preview_image': 'vehicle_image'}"/>
+
+                    <group>
+                        <field name="name" />
+                        <field name="vehicle_model" />
+                        <field name="show_in_website" />
+                    </group>
+                </sheet>
+                
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hotel_vehicle_kanban" model="ir.ui.view">
+        <field name="name">hotel.vehicle.kanban</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <kanban sample="1" class="o_kanban_product_template">
+                <templates>
+                    <t t-name="kanban-box">
+                        <!-- <div t-attf-class="#{record.vehicle_model.raw_value}"> -->
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image me-1">
+                                <img t-att-src="kanban_image('vehicle.vehicle', 'vehicle_image', record.id.raw_value)" alt="Vehicle" class="o_image_64_contain"/>
+                            </div>
+                            <div class="o_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="vehicle_model"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hotel_vehicle_tree" model="ir.ui.view">
+        <field name="name">hotel.vehicle.tree</field>
+        <field name="model">vehicle.vehicle</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="vehicle_model"/>
+                <field name="show_in_website"/>
+            </tree>
+        </field>
+    </record>
+
+<!-- 
+    <record id="action_view_hotel_vehicle_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="name">kanban</field>
+        <field name="view_id" ref="view_hotel_vehicle_kanban"/>
+        <field name="act_window_id" ref="action_hotel_vehicle"/>
+    </record>
+
+    <record id="action_view_hotel_vehicle_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="name">tree</field>
+        <field name="view_id" ref="view_hotel_vehicle_tree"/>
+        <field name="act_window_id" ref="action_hotel_vehicle"/>
+    </record> -->
+</odoo>

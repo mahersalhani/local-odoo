@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- Form View for Payments -->
+        <record id="view_payment_form" model="ir.ui.view">
+            <field name="name">hospital.payment.form</field>
+            <field name="model">hospital.payment</field>
+            <field name="arch" type="xml">
+                <form string="Ödeme">
+                    <sheet>
+                        <group>
+                            <field name="patient_id"/> <!-- Hasta -->
+                            <field name="appointment_id"/> <!-- Randevu -->
+                            <field name="amount_due"/> <!-- Ödenecek Tutar -->
+                            <field name="payment_date"/> <!-- Ödeme Tarihi -->
+                            <field name="payment_status"/> <!-- Durum -->
+                            <field name="notes"/> <!-- Notlar -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Payments -->
+        <record id="view_payment_tree" model="ir.ui.view">
+            <field name="name">hospital.payment.tree</field>
+            <field name="model">hospital.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Ödemeler">
+                    <field name="patient_id"/>
+                    <field name="amount_due"/>
+                    <field name="payment_date"/>
+                    <field name="payment_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Payments -->
+        <record id="action_payments" model="ir.actions.act_window">
+            <field name="name">Ödemeler</field>
+            <field name="res_model">hospital.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

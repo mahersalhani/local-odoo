@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record id="view_health_history_form" model="ir.ui.view">
+            <field name="name">hospital.health.history.form</field>
+            <field name="model">hospital.health.history</field>
+            <field name="arch" type="xml">
+                <form string="Hasta Sağlık Geçmişi">
+                    <sheet>
+                        <group>
+                            <field name="patient_id"/>  <!-- Hasta -->
+                            <field name="visit_date"/>
+                            <field name="reason_for_visit"/>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_health_history_tree" model="ir.ui.view">
+            <field name="name">hospital.health.history.tree</field>
+            <field name="model">hospital.health.history</field>
+            <field name="arch" type="xml">
+                <tree string="Sağlık Geçmişi">
+                    <field name="patient_id"/>
+                    <field name="visit_date"/>
+                    <field name="reason_for_visit"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

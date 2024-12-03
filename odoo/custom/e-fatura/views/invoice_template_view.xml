@@ -1,0 +1,190 @@
+<odoo>
+   
+    <template id="invoice_listing_template" name="Fatura Listesi">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Fatura Listesi</h1>
+                <form string="E-Faturalar">
+                    <t t-if="invoices">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Fatura Numarası</th>
+                                    <th>Müşteri</th>
+                                    <th>Tarih</th>
+                                    <th>Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="invoices" t-as="invoice">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="invoice.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="invoice.partner_id.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="invoice.invoice_date.strftime('%Y-%m-%d') if invoice.invoice_date else 'Tarih Yok'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="invoice.amount_total" t-options='{"widget": "monetary"}' t-field-options='{"currency_field": "currency_id"}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-else="">
+                        <p>Henüz e-fatura bulunmamaktadır.</p>
+                    </t>
+                </form>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="api_data_template" name="API Data Template">
+        <style>
+        .api-data-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+        .api-data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .api-data-table th,
+        .api-data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .api-data-table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+            color: #333;
+        }
+        .api-data-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .page-indicators {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            padding: 0 5px;
+        }
+
+        .page-indicators li {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ddd;
+        }
+
+        .page-indicators li.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .pagination li[data-state="True"] {
+            background-color: #007bff !important;
+        }
+        .pagination li[data-state="True"] a {
+            color: #fff !important;
+        }
+
+        </style>
+
+        <div class="api-data-container">
+            <h2>API Data Display</h2>
+            <table class="api-data-table">
+                <thead>
+                    <tr>
+                        <th>Invoice ID</th>
+                        <th>Document ID</th>
+                        <th>Target Title</th>
+                        <th>Payable Amount</th>
+                        <th>Tax Total</th>
+                        <th>Create Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="data" t-as="item">
+                        <tr>
+                            <td>
+                                <t t-esc="item.get('InvoiceId')"/>
+                            </td>
+                            <td>
+                                <t t-esc="item.get('DocumentId')"/>
+                            </td>
+                            <td>
+                                <t t-esc="item.get('TargetTitle')"/>
+                            </td>
+                            <td>
+                                <t t-esc="item.get('PayableAmount')"/>
+                            </td>
+                            <td>
+                                <t t-esc="item.get('TaxTotal')"/>
+                            </td>
+                            <td>
+                                <t t-esc="item.get('CreateDateUtc')"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <!-- Pagination Controls -->
+            <div class="pagination">
+                <!-- Previous arrow -->
+                <a t-att-href="'/e_fatura/invoices/page/' + previous_page" class="arrow">&lt;</a>
+
+                <!-- Page indicators -->
+                <ul class="page-indicators">
+                    <t t-foreach="page_range" t-as="i">
+                        <li t-att-data-state="str(page_index == i)">
+                            <a t-att-href="'/e_fatura/invoices/page/' + str(i)">
+                                <t t-esc="i"/>
+                            </a>
+                        </li>
+                    </t>
+                </ul>
+
+                <!-- Next arrow -->
+                <a t-att-href="'/e_fatura/invoices/page/' + next_page" class="arrow">&gt;</a>
+            </div>
+
+        </div>
+    </template>
+</odoo>

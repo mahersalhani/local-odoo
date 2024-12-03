@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+  <t t-name="owl.InvoiceListView.Buttons" t-inherit="web.ListView.Buttons" owl="1">
+    <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+      <button class="btn btn-primary ms-1" t-on-click="syncInvoices" t-att-disabled="state.loading">Sync invoices</button>
+    </xpath>
+  </t>
+</templates>

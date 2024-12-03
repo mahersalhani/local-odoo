@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <!-- Form View for Lab Test Results -->
+        <record id="view_lab_test_form" model="ir.ui.view">
+            <field name="name">hospital.lab.test.form</field>
+            <field name="model">hospital.lab.test</field>
+            <field name="arch" type="xml">
+                <form string="Laboratuvar Test Sonuçları">
+                    <sheet>
+                        <group>
+                            <field name="name"/> <!-- Test Adı -->
+                            <field name="patient_id"/> <!-- Hasta -->
+                            <field name="doctor_id"/> <!-- Doktor -->
+                            <field name="test_date"/> <!-- Test Tarihi -->
+                            <field name="result"/> <!-- Sonuçlar -->
+                            <field name="notes"/> <!-- Notlar -->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Lab Test Results -->
+        <record id="view_lab_test_tree" model="ir.ui.view">
+            <field name="name">hospital.lab.test.tree</field>
+            <field name="model">hospital.lab.test</field>
+            <field name="arch" type="xml">
+                <tree string="Laboratuvar Test Sonuçları">
+                    <field name="name"/> <!-- Test Adı -->
+                    <field name="patient_id"/> <!-- Hasta -->
+                    <field name="test_date"/> <!-- Test Tarihi -->
+                    <field name="doctor_id"/> <!-- Doktor -->
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Lab Test Results -->
+        <record id="action_lab_tests" model="ir.actions.act_window">
+            <field name="name">Laboratuvar Test Sonuçları</field>
+            <field name="res_model">hospital.lab.test</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Yeni test sonucu oluşturun.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

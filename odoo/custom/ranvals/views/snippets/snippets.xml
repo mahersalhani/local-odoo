@@ -1,0 +1,28 @@
+<odoo>
+    <template id="custom_snippets" inherit_id="website.snippets" name="Custom Snippets">
+      <xpath expr="//div[@id='snippet_structure']" position="before">
+          <div id="snippet_structure" class="o_panel">
+              <div class="o_panel_header">YourHome</div>
+              <div class="o_panel_body">
+                  <t t-snippet="ranvals.explore_vehicle" t-thumbnail="/ranvals/static/src/img/snippets/properties.svg">
+                      <keywords>explore, vehicle</keywords>
+                  </t>
+              </div>
+          </div>
+      </xpath>
+    </template>
+
+    <!-- To be used in JS for snippet options -->
+    <template id="explore_cities_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="ExploreVehicleOptions" data-selector=".explore-vehicle" data-drop-in=".o_mega_menu nav">
+            </div>
+        </xpath>
+    </template>
+    <!-- <template id="explore_cities_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='Box']" position="before">
+            <div data-js="ExploreVehicleOptions" data-selector=".explore-cities" />
+            <div data-js="ExploreVehicleOptions" data-selector=".explore-vehicle"></div>
+        </xpath>
+    </template> -->
+</odoo>

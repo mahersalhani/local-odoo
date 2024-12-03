@@ -1,0 +1,52 @@
+<odoo>
+    <!-- Appointments Action -->
+    <record id="action_appointments" model="ir.actions.act_window">
+        <field name="name">Randevular</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Randevu oluşturun.
+            </p>
+        </field>
+    </record>
+
+    <!-- Doctors Action -->
+    <record id="action_doctors" model="ir.actions.act_window">
+        <field name="name">Doktorlar</field>
+        <field name="res_model">hospital.doctor</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Doktor oluşturun.
+            </p>
+        </field>
+    </record>
+
+    <!-- Patients Action -->
+    <record id="action_patients" model="ir.actions.act_window">
+        <field name="name">Hastalar</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Hasta kaydı oluşturun.
+            </p>
+        </field>
+    </record>
+
+    <!-- Health History Action -->
+    <record id="action_health_history" model="ir.actions.act_window">
+        <field name="name">Sağlık Geçmişi</field>
+        <field name="res_model">hospital.health.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Sağlık geçmişi kaydı oluşturun.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+   
+</odoo>
