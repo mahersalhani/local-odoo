@@ -4,21 +4,21 @@
             <field name="name">Faturalar</field>
             <field name="res_model">account.move</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('is_efatura', '=', False)]</field>
+            <field name="domain">[('is_efatura', '=', False), ('is_giden_efatura', '=', False)]</field>
         </record>
 
         <record id="action_invoices_list_gelen" model="ir.actions.act_window">
             <field name="name">Gelen Faturalar</field>
             <field name="res_model">account.move</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('is_efatura', '=', True)]</field>
+            <field name="domain">[('is_efatura', '=', True), ('is_giden_efatura', '=', False)]</field>
         </record>
 
         <record id="action_invoices_list_giden" model="ir.actions.act_window">
             <field name="name">Giden Faturalar</field>
             <field name="res_model">account.move</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('is_efatura', '=', False)]</field>
+            <field name="domain">[('is_efatura', '=', True), ('is_giden_efatura', '=', True)]</field>
         </record>
 
         <menuitem id="menu_invoices" name="Invoices" parent="account.menu_finance" sequence="5" action="action_invoices_list" groups="base.group_user"/>

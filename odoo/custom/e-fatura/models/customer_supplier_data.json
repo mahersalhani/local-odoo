@@ -1,0 +1,75 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "Ahmet Yılmaz",
+      "country_id": 223,
+      "city": "İstanbul",
+      "street": "Beşiktaş Mah.",
+      "phone": "+90 212 555 5555",
+      "zip": "34353",
+      "property_account_position_id": { "name": "Beşiktaş Vergi Dairesi" }
+    },
+    {
+      "id": 2,
+      "name": "Ayşe Demir",
+      "country_id": 223,
+      "city": "Ankara",
+      "street": "Kızılay Cad.",
+      "phone": "+90 312 444 4444",
+      "zip": "06000",
+      "property_account_position_id": { "name": "Çankaya Vergi Dairesi" }
+    },
+    {
+      "id": 3,
+      "name": "Mehmet Kaya",
+      "country_id": 223,
+      "city": "İzmir",
+      "street": "Alsancak Mah.",
+      "phone": "+90 232 222 2222",
+      "zip": "35220",
+      "property_account_position_id": { "name": "Alsancak Vergi Dairesi" }
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "XYZ Ticaret",
+      "lastname": "Sanayi",
+      "mersis_number": "1234567890",
+      "account_number": "987654321",
+      "company_name": "XYZ Ticaret Ltd.",
+      "country": "Türkiye",
+      "city": "Ankara",
+      "district": "Çankaya",
+      "street": "Atatürk Bulvarı",
+      "building_no": "19",
+      "tax_schema": "Çankaya Vergi Dairesi"
+    },
+    {
+      "name": "ABC Elektronik",
+      "lastname": "Teknoloji",
+      "mersis_number": "2345678901",
+      "account_number": "876543210",
+      "company_name": "ABC Elektronik A.Ş.",
+      "country": "Türkiye",
+      "city": "İstanbul",
+      "district": "Kadıköy",
+      "street": "Bağdat Caddesi",
+      "building_no": "25",
+      "tax_schema": "Kadıköy Vergi Dairesi"
+    },
+    {
+      "name": "DEF Gıda",
+      "lastname": "Sanayi",
+      "mersis_number": "3456789012",
+      "account_number": "765432109",
+      "company_name": "DEF Gıda San. Tic. Ltd.",
+      "country": "Türkiye",
+      "city": "İzmir",
+      "district": "Bornova",
+      "street": "Kazım Dirik Mah.",
+      "building_no": "5",
+      "tax_schema": "Bornova Vergi Dairesi"
+    }
+  ]
+}
